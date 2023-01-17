@@ -1,0 +1,157 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://Level.gd" type="Script" id=1]
+[ext_resource path="res://Floor.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Steve.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Steve.gd" type="Script" id=4]
+[ext_resource path="res://Assets/untitled.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://MeshInstance.gd" type="Script" id=6]
+[ext_resource path="res://Health.gd" type="Script" id=7]
+[ext_resource path="res://mana.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Steve2.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Blocklibrary.tres" type="MeshLibrary" id=10]
+[ext_resource path="res://GridMap.gd" type="Script" id=11]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 25, 1, 15 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 50, 2, 30 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.14902, 0.505882, 0.498039, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.94902, 0.909804, 0.32549, 1 )
+
+[sub_resource type="PrismMesh" id=5]
+
+[sub_resource type="CubeMesh" id=6]
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.972549, 0.231373, 0.176471, 1 )
+
+[sub_resource type="SpatialMaterial" id=12]
+albedo_color = Color( 0, 0.223529, 0.745098, 1 )
+
+[sub_resource type="CubeMesh" id=13]
+material = SubResource( 12 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.901961, 0.0431373, 0.0431373, 1 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.941176, 0.337255, 0.337255, 1 )
+
+[node name="Level" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Floor" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Floor"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Steve" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, 0 )
+collision_mask = 5
+script = ExtResource( 4 )
+
+[node name="MeshInstance" parent="Steve" index="0"]
+transform = Transform( -2.62268e-008, 0, 0.6, 0, 0.6, 0, -0.6, 0, -2.62268e-008, 0, 2, 0 )
+mesh = ExtResource( 5 )
+material/0 = SubResource( 4 )
+script = ExtResource( 6 )
+
+[node name="Camtarg" type="Spatial" parent="Steve"]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -15, 5, 0 )
+
+[node name="Castpoint2" type="Spatial" parent="Steve"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.02, 0 )
+
+[node name="Pointer" type="MeshInstance" parent="Steve"]
+transform = Transform( -2.18557e-008, 0.75, -8.74228e-009, 0, -3.27835e-008, -0.2, -0.5, -3.27835e-008, 3.82137e-016, 2.4, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Healthbar" type="MeshInstance" parent="Steve"]
+transform = Transform( 0.02, 0, 0, 0, 0.2, 0, 0, 0, 1.2, 0, 3, 0 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="Health" type="MeshInstance" parent="Steve/Healthbar"]
+transform = Transform( 1.2, 0, 0, 0, 1.05, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+script = ExtResource( 7 )
+
+[node name="Manabar" type="MeshInstance" parent="Steve"]
+transform = Transform( 0.02, 0, 0, 0, 0.05, 0, 0, 0, 1.2, 0, 2.7, 0 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="mana" type="MeshInstance" parent="Steve/Manabar"]
+transform = Transform( 1.2, 0, 0, 0, 1.05, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 13 )
+material/0 = null
+script = ExtResource( 8 )
+
+[node name="Steve2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, 0 )
+collision_mask = 5
+script = ExtResource( 9 )
+
+[node name="MeshInstance" parent="Steve2" index="0"]
+material/0 = SubResource( 10 )
+script = ExtResource( 6 )
+
+[node name="Camtarg" type="Spatial" parent="Steve2"]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 15, 5, 0 )
+
+[node name="Castpoint2" type="Spatial" parent="Steve2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.02, 0 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Steve2"]
+transform = Transform( -2.18557e-008, -0.75, -8.74228e-009, 0, -3.27835e-008, 0.2, -0.5, 3.27835e-008, 3.82137e-016, -2.4, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 11 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 22, 0 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -41.3434, 12.4003, 0 )
+current = true
+target = NodePath("../Steve/Camtarg")
+enabled = true
+
+[node name="InterpolatedCamera2" type="InterpolatedCamera" parent="."]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 40, 12.4, 0 )
+target = NodePath("../Steve2/Camtarg")
+enabled = true
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 10 )
+data = {
+"cells": PoolIntArray( 11, 0, 0, 65524, 0, 536870912, 0, 1, 0, 1, 1, 0, 11, 1, 536870912, 65524, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 2, 0, 11, 2, 0, 65524, 2, 536870912, 65535, 2, 0, 0, 3, 0, 11, 3, 0, 65524, 3, -1610612736, 65535, 3, -1610612736, 0, 4, 0, 11, 4, 0, 65524, 4, 0, 65535, 4, 0, 0, 5, 0, 11, 5, 0, 65524, 5, 0, 65535, 5, 0, 0, 6, 0, 1, 6, 0, 2, 6, 0, 3, 6, 536870912, 4, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 8, 6, 0, 9, 6, -1610612736, 10, 6, 536870912, 11, 6, 0, 65524, 6, 0, 65525, 6, 536870912, 65526, 6, 0, 65527, 6, 0, 65528, 6, 0, 65529, 6, 0, 65530, 6, 0, 65531, 6, 536870912, 65532, 6, 0, 65533, 6, 1073741824, 65534, 6, 536870912, 65535, 6, 0, 0, 65529, 0, 1, 65529, 536870912, 2, 65529, 0, 3, 65529, 0, 4, 65529, 0, 5, 65529, 0, 6, 65529, 0, 7, 65529, 0, 8, 65529, 0, 9, 65529, 0, 10, 65529, 0, 11, 65529, 0, 65524, 65529, 0, 65525, 65529, 0, 65526, 65529, 0, 65527, 65529, 0, 65528, 65529, 0, 65529, 65529, 0, 65530, 65529, 536870912, 65531, 65529, 0, 65532, 65529, 0, 65533, 65529, 0, 65534, 65529, 0, 65535, 65529, 0, 0, 65530, 536870912, 11, 65530, 0, 65524, 65530, 0, 65535, 65530, 536870912, 0, 65531, 0, 11, 65531, 0, 65524, 65531, 0, 65535, 65531, 0, 0, 65532, 0, 11, 65532, 0, 65524, 65532, 0, 65535, 65532, 536870912, 0, 65533, 536870912, 11, 65533, 0, 65524, 65533, 0, 65535, 65533, 0, 0, 65534, 0, 1, 65534, 0, 11, 65534, 0, 65524, 65534, 0, 65534, 65534, 0, 65535, 65534, 536870912, 11, 65535, 0, 65524, 65535, 0 )
+}
+script = ExtResource( 11 )
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 0, 0 )
+}
+
+[editable path="Steve"]
+
+[editable path="Steve2"]
